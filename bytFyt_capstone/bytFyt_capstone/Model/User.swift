@@ -27,7 +27,7 @@ class User {
     
     var FirstName: String;
     var LastName: String;
-    var Birthday: Date
+    var Birthday: Date;
     var Sex: Bool;
     var Height: Double;
     var StartingWeight: Double;
@@ -38,10 +38,11 @@ class User {
     var SleepGoal: Int;
     var WeightGoal: Int;
     var DailyEntries: [Entry];
+    var UseMetric: Bool;
     
     
     init(firstName: String, lastName: String, birthday: Date, sex: Bool, height: Double, startWeight: Double, activity: Double
-         , calorieGoal: Int, sleepGoal: Int, weightGoal: Int)  {
+         , calorieGoal: Int, sleepGoal: Int, weightGoal: Int, metric: Bool)  {
         
         
         self.FirstName = firstName;
@@ -57,6 +58,12 @@ class User {
         self.SleepGoal = sleepGoal;
         self.WeightGoal = weightGoal;
         self.DailyEntries = [];
+        self.UseMetric = metric;
+    }
+    
+    
+    func setWeight(newWeight: Double) {
+        self.CurrentWeight = newWeight;
     }
     
     
@@ -75,12 +82,12 @@ class User {
     }
     
     
-    func getMetricHeight() -> Double{
-        return Double(round(Double(self.Height) * 2.54));
+    func convertMetricHeight(inputHeight: Double) -> Double{
+        return Double(round(Double(inputHeight) * 2.54));
     }
     
-    func getMetricWeight() -> Double{
-        return Double(self.StartingWeight / 0.453592);
+    func convertMetricWeight(inputWeight: Double) -> Double{
+        return (inputWeight / 0.453592);
     }
     
     
@@ -99,8 +106,10 @@ class User {
         bmr += (15.88 * self.Height);
         bmr -= (5 * Double(getAge()));
         
-        bmr -= 166;
-
+        
+        if(!self.Sex) {
+            bmr -= 166;
+        }
         
         return bmr;
     }
@@ -123,9 +132,7 @@ class User {
     }
     
     
-    func weightChange() -> Double {
-        return self.StartingWeight - self.CurrentWeight;
-    }
+
     
     
 

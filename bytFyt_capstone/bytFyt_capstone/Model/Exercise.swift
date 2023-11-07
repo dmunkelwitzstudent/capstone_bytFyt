@@ -10,7 +10,7 @@ import SwiftData
 
 
 
-@Model
+
 class Exercise {
     
     // Stored data is in imperial measurements, user will be able to toggle metric

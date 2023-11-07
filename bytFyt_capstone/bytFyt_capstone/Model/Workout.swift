@@ -18,9 +18,10 @@ class Workout {
     
     
     @Attribute(.unique) var Name: String;
-    var exercises: [Exercise];
+    var chosenExercises: [Int];
     var sets: [Int];
     var totalCalories: Int;
+    static var listOfExercises: [Exercise] = [];
     
     
     
@@ -29,9 +30,10 @@ class Workout {
     
     init(Name: String, totalCalories: Int) {
         self.Name = Name;
-        self.exercises = [];
+        self.chosenExercises = [];
         self.totalCalories = 0;
         self.sets = [];
+
     }
     
     
@@ -43,9 +45,9 @@ class Workout {
         var total: Int = 0;
         var loopCounter: Int = 0;
         
-        for exercise in self.exercises {
+        for _ in self.chosenExercises {
             
-            total += exercise.CaloriesBurned * sets[loopCounter];
+            total += Workout.listOfExercises[chosenExercises[loopCounter]].CaloriesBurned * sets[loopCounter];
             loopCounter += 1;
             
         }
@@ -53,6 +55,17 @@ class Workout {
         
         
         self.totalCalories = total;
+    }
+    
+    static func populateExerciseList() {
+        
+        // open text file
+        // loop through file, line by line
+        // reading input, create objects with specified properties. 
+        
+        
+        // add object to array listOfExercises
+        
     }
     
     
