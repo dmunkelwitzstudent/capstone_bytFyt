@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E875DFF2B002CBF00AA6C7F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E875DFE2B002CBF00AA6C7F /* DashboardView.swift */; };
 		2EF355DB2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF355DA2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift */; };
 		2EF355DD2AF2F64E009E4AF7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF355DC2AF2F64E009E4AF7 /* ContentView.swift */; };
 		2EF355DF2AF2F64E009E4AF7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF355DE2AF2F64E009E4AF7 /* Item.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E875DFE2B002CBF00AA6C7F /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		2EF355D72AF2F64E009E4AF7 /* bytFyt_capstone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bytFyt_capstone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EF355DA2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bytFyt_capstoneApp.swift; sourceTree = "<group>"; };
 		2EF355DC2AF2F64E009E4AF7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			children = (
 				2EF355DA2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift */,
 				2EF355DC2AF2F64E009E4AF7 /* ContentView.swift */,
+				2E875DFE2B002CBF00AA6C7F /* DashboardView.swift */,
 				2EF355DE2AF2F64E009E4AF7 /* Item.swift */,
 				2EF355E02AF2F64F009E4AF7 /* Assets.xcassets */,
 				2EF355E22AF2F64F009E4AF7 /* Preview Content */,
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EF355DD2AF2F64E009E4AF7 /* ContentView.swift in Sources */,
+				2E875DFF2B002CBF00AA6C7F /* DashboardView.swift in Sources */,
 				2EF355DF2AF2F64E009E4AF7 /* Item.swift in Sources */,
 				2EF355DB2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift in Sources */,
 			);
