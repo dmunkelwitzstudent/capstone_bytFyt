@@ -21,8 +21,6 @@ struct DashboardView: View {
     
     ZStack{
       
-      
-      
       VStack {
         // Dashboard content
         Text("Dashboard")
@@ -34,7 +32,7 @@ struct DashboardView: View {
         Spacer()
         
         // Progress views for each metric
-        ProgressView(value: 830, total: 2000) {
+        ProgressView(value: 800, total: 2000) {
           Text("Daily Calories Remaining: 830")
             .accentColor(AppColorScheme.accentColor)
             .padding()
