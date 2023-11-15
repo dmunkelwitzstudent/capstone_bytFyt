@@ -10,7 +10,7 @@ import SwiftData
 
 
 
-
+@Model
 class Exercise {
     
     // Stored data is in imperial measurements, user will be able to toggle metric
@@ -19,10 +19,10 @@ class Exercise {
     var Name: String;
     var MuscleGroup: String;
     var Guide: String;
-    var CaloriesBurned: Int;
+    var CaloriesBurned: Double;
     
     
-    init (name: String, muscleGroup: String, guide: String, calories: Int) {
+    init (name: String, muscleGroup: String, guide: String, calories: Double) {
         self.Name = name;
         self.MuscleGroup = muscleGroup;
         self.Guide = guide;

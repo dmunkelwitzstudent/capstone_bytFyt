@@ -25,24 +25,43 @@ class User {
     
     // Sleep is stored in minutes
     
+    
+    // the following properties will not be changed,
+    // or in the case of height, will only be changed rarely for certain people
     var FirstName: String;
     var LastName: String;
     var Birthday: Date;
     var Sex: Bool;
     var Height: Double;
+    
+    // Starting information
     var StartingWeight: Double;
-    var CurrentWeight: Double;
     var InitialLogin: Date;
+
     var ActivityLevel: Double;
     var CalorieGoal: Int;
     var SleepGoal: Int;
-    var WeightGoal: Int;
+    var WeightGoal: Double;
+    
     var DailyEntries: [Entry];
+    
+    var Workouts: [Workout] = [];
+    
+    
     var UseMetric: Bool;
+    
+    var currentFoodCalories: Int;
+    var currentSleep: Int;
+    var currentWeight: Double;
+    var currentActiveCalories: Int;
+    var currentSleepQuality: Int;
+    var currentWater: Int;
+    
+    
     
     
     init(firstName: String, lastName: String, birthday: Date, sex: Bool, height: Double, startWeight: Double, activity: Double
-         , calorieGoal: Int, sleepGoal: Int, weightGoal: Int, metric: Bool)  {
+         , calorieGoal: Int, sleepGoal: Int, weightGoal: Double, metric: Bool)  {
         
         
         self.FirstName = firstName;
@@ -51,7 +70,6 @@ class User {
         self.Sex = sex;
         self.Height = height;
         self.StartingWeight = startWeight;
-        self.CurrentWeight = startWeight;
         self.InitialLogin = Date();
         self.ActivityLevel = activity;
         self.CalorieGoal = calorieGoal;
@@ -59,14 +77,15 @@ class User {
         self.WeightGoal = weightGoal;
         self.DailyEntries = [];
         self.UseMetric = metric;
+        self.currentFoodCalories = 0;
+        self.currentSleep = 0;
+        self.currentWeight = startWeight;
+        self.currentActiveCalories = 0;
+        self.currentSleepQuality = 0;
+        self.currentWater = 0;
     }
     
-    
-    func setWeight(newWeight: Double) {
-        self.CurrentWeight = newWeight;
-    }
-    
-    
+
     
     func setHeight(newHeight: Double) {
         self.Height = newHeight;
@@ -93,7 +112,7 @@ class User {
     
     
     func getBMI() -> Double {
-        return 703 * (Double(self.CurrentWeight / (Double(self.Height) * Double(self.Height))));
+        return 703 * ((currentWeight / (Double(self.Height) * Double(self.Height))));
     }
     
     func getBMR() -> Double {
@@ -102,7 +121,7 @@ class User {
         
 
             
-        bmr = (4.536 * self.CurrentWeight);
+        bmr = (4.536 * self.currentWeight);
         bmr += (15.88 * self.Height);
         bmr -= (5 * Double(getAge()));
         
@@ -132,22 +151,98 @@ class User {
     }
     
     
-
+    func setWeightGoal(newWeight: Double) {
+        self.WeightGoal = newWeight;
+    }
+    
+    func setCurrentWeight(currentWeight: Double) {
+        self.currentWeight = currentWeight;
+    }
+    
+    func addCurrentSleep(currentSleep: Int) {
+        self.currentSleep = currentSleep;
+    }
+    
+    func setSleepQuality(currentSleepQuality: Int) {
+        self.currentSleepQuality = currentSleepQuality;
+    }
+    
+    func addFoodCalories(addCalories: Int) {
+        self.currentFoodCalories += addCalories;
+    }
+    
+    func addWaterIntake(addWater: Int) {
+        self.currentWater = addWater;
+    }
     
     
 
-    func getLatestEntry() -> Entry {
-        
-        
-        if (DailyEntries.count != 0) {
 
-            
-            return DailyEntries[DailyEntries.count - 1];
-            
+    func getLatestEntry() -> Entry? {
+        
+        
+        if (DailyEntries.count == 0) {
+            return nil;
+            // should trigger upon first use.
         }
         
         
+        
+        return DailyEntries[DailyEntries.count - 1];
+    
     }
+    
+    
+    func getEntryList(goBack: Int) -> [Entry]? {
+        
+        // Loops backwards from the DailyEntries Array goBack amount of times, as long as it is valid
+        
+        // views will be 1w, 2w, 4w, 3m, 6m, 1y
+        
+        if (DailyEntries.count == 0) {
+            return nil;
+        }
+        
+        // grab array of entry objects from time to now, specified in function parameter.
+        
+        var returnArray: [Entry] = [];
+        // alternatively, simply loop back to time
+        let parameter = 2;
+        var counter = 0;
+        
+        while (counter <= parameter && DailyEntries.count - 1 - counter >= 0) {
+            returnArray[counter] = DailyEntries[DailyEntries.count - 1 - counter];
+            counter += 1;
+        }
+        
+        return returnArray;
+    }
+    
+    
+    func addEntry () {
+        
+        self.DailyEntries[DailyEntries.count] = Entry.init(today: Date(), weight: currentWeight, sleep: currentSleep,
+        foodCalories: currentFoodCalories, water: currentWater, sleepQuality: currentSleepQuality, activeCalories: currentActiveCalories);
+        
+        // if it is the end of the day. reset the current variables.
+        resetCurrentVariables();
+        
+    }
+    
+    
+    func resetCurrentVariables() {
+        self.currentSleep = 0;
+        self.currentWater = 0;
+        self.currentWeight = 0;
+        self.currentFoodCalories = 0;
+        self.currentSleepQuality = 0;
+        self.currentFoodCalories = 0;
+    }
+    
+
+    
+    
+    
     
     
     
