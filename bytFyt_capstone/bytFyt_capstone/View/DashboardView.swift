@@ -9,21 +9,23 @@ import SwiftUI
 
 struct DashboardView: View {
   
+  //Color scheme for DashboardView
   struct AppColorScheme {
-    
     static let backgroundColor = Color.blue
-    static let accentColor = Color.red
+    static let accentColor = Color.white
     static let textColor = Color.white
-    
   }
   
+  //NOTE: Stacks are used for formatting content within a view
   var body: some View {
-    
-    ZStack{
+    ZStack {
+      AppColorScheme.backgroundColor
+        .ignoresSafeArea(edges: .all)
       
       VStack {
-        // Dashboard content
+        // Dashboard Header
         Text("Dashboard")
+          //Applies styles to the views. Try to keep consistent!
           .font(.largeTitle)
           .foregroundColor(AppColorScheme.textColor)
           .padding()
@@ -31,69 +33,60 @@ struct DashboardView: View {
         
         Spacer()
         
-        // Progress views for each metric
-        ProgressView(value: 800, total: 2000) {
-          Text("Daily Calories Remaining: 830")
-            .accentColor(AppColorScheme.accentColor)
-            .padding()
+        // Dashboard Metrics
+        VStack(alignment: .leading, spacing: 20) {
+          // Daily Calories Remaining
+          HStack {
+            Gauge(value: 1700, in: 0...2000) {
+              Text("Calories")
+                .foregroundColor(AppColorScheme.accentColor)
+            }
+            .gaugeStyle(.accessoryCircularCapacity)
+            Text("Daily Calories Remaining: 830")
+              .foregroundColor(AppColorScheme.accentColor)
+          }
+          
+          // Daily Water Remaining
+          HStack {
+            Gauge(value: 4, in: 0...8) {
+              Text("Water")
+                .foregroundColor(AppColorScheme.accentColor)
+            }
+            .gaugeStyle(.accessoryCircularCapacity)
+            Text("Daily Water Remaining: 4 Glasses")
+              .foregroundColor(AppColorScheme.accentColor)
+          }
+          
+          // Active Calories Burned Today
+          HStack {
+            Gauge(value: 140, in: 0...500) {
+              Text("Active Calories")
+                .foregroundColor(AppColorScheme.accentColor)
+            }
+            .gaugeStyle(.accessoryCircularCapacity)
+            Text("Active Calories Burned Today: 140")
+              .foregroundColor(AppColorScheme.accentColor)
+          }
+          
+          // Hours Slept
+          HStack {
+            Gauge(value: 7.75, in: 0...8) {
+              Text("Sleep")
+                .foregroundColor(AppColorScheme.accentColor)
+            }
+            .gaugeStyle(.accessoryCircularCapacity)
+            Text("Hours Slept: 7.75")
+              .foregroundColor(AppColorScheme.accentColor)
+          }
         }
-        
-        ProgressView(value: 4, total: 8) {
-          Text("Daily Water Remaining: 4 Glasses")
-            .accentColor(AppColorScheme.accentColor)
-            .padding()
-        }
-        
-        ProgressView(value: 140, total: 500) {
-          Text("Active Calories Burned Today: 140")
-            .accentColor(AppColorScheme.accentColor)
-            .padding()
-        }
-        
-        ProgressView(value: 7.75, total: 8) {
-          Text("Hours Slept: 7.75\n15 Minutes down from target")
-            .accentColor(AppColorScheme.accentColor)
-            .padding()
-        }
+        .padding()
         
         Spacer()
-        
-        // Tab bar
-        TabView {
-          // The views for each tab go here
-          Text("Home").tabItem {
-            Image(systemName: "house")
-            Text("Home")
-              .accentColor(AppColorScheme.accentColor)
-              .padding()
-          }
-          
-          Text("Nutrition").tabItem {
-            Image(systemName: "leaf")
-            Text("Nutrition")
-              .accentColor(AppColorScheme.accentColor)
-              .padding()
-          }
-          
-          Text("Workout").tabItem {
-            Image(systemName: "flame")
-            Text("Workout")
-              .accentColor(AppColorScheme.accentColor)
-              .padding()
-          }
-          
-          Text("Sleep").tabItem {
-            Image(systemName: "moon.zzz")
-            Text("Sleep")
-              .accentColor(AppColorScheme.accentColor)
-              .padding()
-          }
-        }
       }
     }
   }
-  
 }
+
 
 struct DashboardView_Previews: PreviewProvider {
   static var previews: some View {
