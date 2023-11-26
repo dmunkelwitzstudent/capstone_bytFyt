@@ -10,11 +10,6 @@ import Foundation
 import SwiftData
 
 
-
-
-
-
-
 @Model
 class User {
     
@@ -40,13 +35,12 @@ class User {
 
     var ActivityLevel: Double;
     var CalorieGoal: Int;
+    var ActivityGoal: Int;
     var SleepGoal: Int;
     var WeightGoal: Double;
     
     var DailyEntries: [Entry];
-    
-    var Workouts: [Workout] = [];
-    
+
     
     var UseMetric: Bool;
     
@@ -70,12 +64,15 @@ class User {
         self.Sex = sex;
         self.Height = height;
         self.StartingWeight = startWeight;
+        
         self.InitialLogin = Date();
         self.ActivityLevel = activity;
         self.CalorieGoal = calorieGoal;
         self.SleepGoal = sleepGoal;
         self.WeightGoal = weightGoal;
+        self.ActivityGoal = 0;
         self.DailyEntries = [];
+        
         self.UseMetric = metric;
         self.currentFoodCalories = 0;
         self.currentSleep = 0;
@@ -83,6 +80,7 @@ class User {
         self.currentActiveCalories = 0;
         self.currentSleepQuality = 0;
         self.currentWater = 0;
+
     }
     
 
@@ -125,7 +123,7 @@ class User {
         bmr += (15.88 * self.Height);
         bmr -= (5 * Double(getAge()));
         
-        
+        // if the user is female, change formula for bmr
         if(!self.Sex) {
             bmr -= 166;
         }

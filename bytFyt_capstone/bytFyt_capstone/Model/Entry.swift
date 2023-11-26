@@ -52,6 +52,10 @@ class Entry {
         self.WaterIntake += newSleep;
     }
     
+    func changeSleepQuality(newQuality: Int) {
+        self.SleepQuality = newQuality;
+    }
+    
     
     func changeWater(newWater: Int) {
         self.WaterIntake += newWater;

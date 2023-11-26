@@ -12,7 +12,6 @@ import SwiftData
 
 
 
-
 @Model
 class Workout {
     
@@ -27,16 +26,15 @@ class Workout {
     
     
     
-    
-    
-    init(Name: String, totalCalories: Int) {
-        self.Name = Name;
+
+    init(name: String) {
+        self.Name = name;
         self.chosenExercises = [];
         self.totalCalories = 0;
         self.sets = [];
         self.repsPerSet = [];
 
-    }
+    @State var activityLevel: Double = 1;
     
     
     
@@ -88,6 +86,8 @@ class Workout {
         return populatedExercises;
         
     }
+    
+    
     
     
     
