@@ -12,7 +12,7 @@ import SwiftData
 struct bytFyt_capstoneApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            User.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,8 +25,8 @@ struct bytFyt_capstoneApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginMenu()
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(for: User.self)
     }
 }
