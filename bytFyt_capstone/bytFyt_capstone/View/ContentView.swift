@@ -19,13 +19,15 @@ struct ContentView: View {
   // Instance of SleepDataViewModel() to share data between views
   @StateObject var sleepDataViewModel = SleepDataViewModel()
   
+  @StateObject var nutritionDataViewModel = NutritionDataViewModel()
+  
   var body: some View {
     
     // TabView creates a navigation bar
     TabView(selection: $selectedTab) {
       
       //View for dashboard
-      DashboardView(sleepDataViewModel: sleepDataViewModel)
+      DashboardView(sleepDataViewModel: sleepDataViewModel, nutritionDataViewModel: nutritionDataViewModel)
         .tabItem {
           Label("Dashboard", systemImage: "house")
         }
@@ -38,6 +40,17 @@ struct ContentView: View {
           Label("Sleep", systemImage: "moon.zzz")
         }
         .tag("Sleep")
+      
+      NutritionView(nutritionDataViewModel: nutritionDataViewModel)
+        .tabItem {
+          Label("Nutrition", systemImage: "leaf")
+        }
+        .tag("Nutrition")
+      
+      HistoryView()
+          .tabItem {
+              Label("History", systemImage: "chart.bar")
+          }
       
       // TODO: Add more tabs below when they're finished...
     }
