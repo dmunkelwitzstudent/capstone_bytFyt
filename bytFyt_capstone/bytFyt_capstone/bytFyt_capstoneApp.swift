@@ -10,11 +10,19 @@ import SwiftData
 
 @main
 struct bytFyt_capstoneApp: App {
+    
+    @Environment(\.modelContext) private var modelContext
+    @Query var users: [User]
+    @Query var exercises: [Exercise]
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,
+            Workout.self,
+            Exercise.self,
+            Entry.self
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -25,8 +33,10 @@ struct bytFyt_capstoneApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginMenu()
+
+                ContentView()
+
         }
-        .modelContainer(for: User.self)
+        .modelContainer(for: [User.self, Workout.self, Entry.self, Exercise.self])
     }
 }

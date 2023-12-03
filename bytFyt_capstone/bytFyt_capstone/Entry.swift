@@ -18,16 +18,16 @@ class Entry {
     
     var Date: Date;
     var Weight: Double;
-    var Sleep: Int;
-    var SleepQuality: Int;
-    var FoodCalories: Int;
-    var ActiveCalories: Int;
-    var WaterIntake: Int;
+    var Sleep: Double;
+    var SleepQuality: Double;
+    var FoodCalories: Double;
+    var ActiveCalories: Double;
+    var WaterIntake: Double;
     
     // Units are as follows, lbs, minutes, kcal, oz.
-    // Sleep Quality is a scale of 1-5
+    // Sleep Quality is a scale of 1-100
     
-    init (today: Date, weight: Double, sleep: Int, foodCalories: Int, water: Int, sleepQuality: Int, activeCalories: Int) {
+    init (today: Date, weight: Double, sleep: Double, foodCalories: Double, water: Double, sleepQuality: Double, activeCalories: Double) {
      
         self.Date = today;
         self.Weight = weight;
@@ -48,26 +48,26 @@ class Entry {
     
     
     
-    func changeSleep(newSleep: Int) {
+    func changeSleep(newSleep: Double) {
         self.WaterIntake += newSleep;
     }
     
-    func changeSleepQuality(newQuality: Int) {
+    func changeSleepQuality(newQuality: Double) {
         self.SleepQuality = newQuality;
     }
     
     
-    func changeWater(newWater: Int) {
+    func changeWater(newWater: Double) {
         self.WaterIntake += newWater;
     }
     
     
-    func changeFoodCalories(newCalories: Int) {
+    func changeFoodCalories(newCalories: Double) {
         self.FoodCalories += newCalories;
     }
     
     
-    func changeActiveCalories(newCalories: Int) {
+    func changeActiveCalories(newCalories: Double) {
         self.ActiveCalories += newCalories;
     }
     

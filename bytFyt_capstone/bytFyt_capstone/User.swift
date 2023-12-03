@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SwiftData
 
 
@@ -34,28 +33,30 @@ class User {
     var InitialLogin: Date;
 
     var ActivityLevel: Double;
-    var CalorieGoal: Int;
-    var ActivityGoal: Int;
-    var SleepGoal: Int;
+    var CalorieGoal: Double;
+    var ActivityGoal: Double;
+    var SleepGoal: Double;
     var WeightGoal: Double;
+    var WaterGoal: Double;
     
     var DailyEntries: [Entry];
 
     
+
     var UseMetric: Bool;
     
-    var currentFoodCalories: Int;
-    var currentSleep: Int;
+    var currentFoodCalories: Double;
+    var currentSleep: Double;
     var currentWeight: Double;
-    var currentActiveCalories: Int;
-    var currentSleepQuality: Int;
-    var currentWater: Int;
+    var currentActiveCalories: Double;
+    var currentSleepQuality: Double;
+    var currentWater: Double;
     
     
     
     
     init(firstName: String, lastName: String, birthday: Date, sex: Bool, height: Double, startWeight: Double, activity: Double
-         , calorieGoal: Int, sleepGoal: Int, weightGoal: Double, metric: Bool)  {
+         , calorieGoal: Double, sleepGoal: Double, weightGoal: Double, useMetric: Bool)  {
         
         
         self.FirstName = firstName;
@@ -64,22 +65,27 @@ class User {
         self.Sex = sex;
         self.Height = height;
         self.StartingWeight = startWeight;
-        
         self.InitialLogin = Date();
         self.ActivityLevel = activity;
+        
+        // Goals
         self.CalorieGoal = calorieGoal;
         self.SleepGoal = sleepGoal;
         self.WeightGoal = weightGoal;
-        self.ActivityGoal = 0;
+        self.ActivityGoal = 300;
+        self.WaterGoal = 64;
+        
+        
         self.DailyEntries = [];
         
-        self.UseMetric = metric;
+        self.UseMetric = useMetric;
         self.currentFoodCalories = 0;
         self.currentSleep = 0;
         self.currentWeight = startWeight;
         self.currentActiveCalories = 0;
         self.currentSleepQuality = 0;
         self.currentWater = 0;
+        
 
     }
     
@@ -101,6 +107,10 @@ class User {
     
     func convertMetricHeight(inputHeight: Double) -> Double{
         return Double(round(Double(inputHeight) * 2.54));
+    }
+    
+    func convertImperialHeight(inputHeight: Double) -> Double {
+        return Double(round(Double(inputHeight) * 0.3937));
     }
     
     func convertMetricWeight(inputWeight: Double) -> Double{
@@ -140,11 +150,11 @@ class User {
         self.ActivityLevel = newActivity;
     }
     
-    func setCalorieGoal(newGoal: Int) {
+    func setCalorieGoal(newGoal: Double) {
         self.CalorieGoal = newGoal;
     }
     
-    func setSleepGoal(newGoal: Int) {
+    func setSleepGoal(newGoal: Double) {
         self.SleepGoal = newGoal;
     }
     
@@ -157,19 +167,19 @@ class User {
         self.currentWeight = currentWeight;
     }
     
-    func addCurrentSleep(currentSleep: Int) {
+    func addCurrentSleep(currentSleep: Double) {
         self.currentSleep = currentSleep;
     }
     
-    func setSleepQuality(currentSleepQuality: Int) {
+    func setSleepQuality(currentSleepQuality: Double) {
         self.currentSleepQuality = currentSleepQuality;
     }
     
-    func addFoodCalories(addCalories: Int) {
+    func addFoodCalories(addCalories: Double) {
         self.currentFoodCalories += addCalories;
     }
     
-    func addWaterIntake(addWater: Int) {
+    func addWaterIntake(addWater: Double) {
         self.currentWater = addWater;
     }
     
@@ -238,11 +248,6 @@ class User {
     }
     
 
-    
-    
-    
-    
-    
-    
+
     
 }
