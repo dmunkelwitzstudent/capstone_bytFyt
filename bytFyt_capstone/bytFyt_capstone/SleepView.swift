@@ -6,7 +6,6 @@
 //
 //  The purpose of this view is to provide the user of the application with an interactive page of their sleep health.
 
-
 import SwiftUI
 import SwiftData
 
@@ -18,39 +17,43 @@ struct SleepView: View {
     static let accentColor = Color.white
     static let textColor = Color.white
   }
-    
-    @Environment(\.modelContext) private var modelContext
-    @Query var users: [User]
+  
+  //Default values for alert related code
+  @State var showAlert = false
+  
+  @State var alertMsg = ""
+  
+  @Environment(\.modelContext) private var modelContext
+  
+  @Query var users: [User]
   
   // Observable object to interact with the shared sleep data model.
   //@ObservedObject var sleepDataViewModel: SleepDataViewModel
   
-
-  
   // Function to update the hours slept in the SleepDataViewModel.
-    
-    @State  private var sleepGoalInput: String = ""
-    // State variable to store the actual sleep goal
-    @State  private var sleepGoal: Double = 0;
-    
-    // State variable to store the user's hours slept input
-    @State  private var hoursSleptInput: String = ""
-    // State variable to store the actual hours slept
-    @State  private var hoursSlept: Double = 0;
-    
-    // Sleep quality value, range from 0 (Poor) to 1 (Excellent)
-    @State  private var sleepQuality: Double = 0.5;
-
-    
+  
+  @State  private var sleepGoalInput: String = ""
+  // State variable to store the actual sleep goal
+  @State  private var sleepGoal: Double = 0;
+  
+  // State variable to store the user's hours slept input
+  @State  private var hoursSleptInput: String = ""
+  // State variable to store the actual hours slept
+  @State  private var hoursSlept: Double = 0;
+  
+  // Sleep quality value, range from 0 (Poor) to 1 (Excellent)
+  @State  private var sleepQuality: Double = 0.5;
+  
+  
   var body: some View {
-      
-      
+    
     //users[0].currentSleepQuality = Int(sleepQuality);
-      
-      // State variable to store user's sleep goal input
-
-      var main = users[0];
-      
+    
+    // State variable to store user's sleep goal input
+    
+    var main = users[0];
+    
+    
     ZStack {
       
       AppColorScheme.backgroundColor
@@ -75,7 +78,7 @@ struct SleepView: View {
             
             Spacer()
             
-              Text("Goal: \(main.SleepGoal / 60) Hours")
+            Text("Goal: \(main.SleepGoal / 60) Hours")
               .font(.system(size: 50))
               .fontWeight(.bold)
               .foregroundColor(AppColorScheme.accentColor)
@@ -95,10 +98,13 @@ struct SleepView: View {
             Button("Set Goal") {
               
               // Convert input to Double and update sleep goal
-              if let newGoal = Double(sleepGoalInput) {
+              if let newGoal = Double(sleepGoalInput), newGoal >= 0 && newGoal <= 24 {
                 sleepGoal = newGoal
-
-                  main.SleepGoal = (newGoal * 60);
+                
+                main.SleepGoal = (newGoal * 60);
+              } else {
+                alertMsg = "Please enter a valid sleep goal (0-24 hours)."
+                showAlert = true
               }
               
             }
@@ -114,13 +120,13 @@ struct SleepView: View {
           // Hours Slept Metric
           HStack {
             
-              Gauge(value: Double(main.currentSleep), in: 0...Double(main.SleepGoal)) {
+            Gauge(value: Double(main.currentSleep), in: 0...Double(main.SleepGoal)) {
               Text("Slept")
                 .foregroundColor(AppColorScheme.accentColor)
             }
             
             .gaugeStyle(.accessoryCircularCapacity)
-              Text("\(Double(Double(main.currentSleep) / 60), specifier: "%.1f") Hours Slept Last Night")
+            Text("\(Double(Double(main.currentSleep) / 60), specifier: "%.1f") Hours Slept Last Night")
               .foregroundColor(AppColorScheme.accentColor)
           }
           
@@ -132,10 +138,12 @@ struct SleepView: View {
               .padding()
             
             Button("Set Hours") {
-              if let newHours = Double(hoursSleptInput) {
-                  hoursSlept = newHours;
-                  main.currentSleep = newHours * 60;
-                
+              if let newHours = Double(hoursSleptInput), newHours >= 0 && newHours <= 24 {
+                hoursSlept = newHours
+                main.currentSleep = newHours * 60;
+              } else {
+                alertMsg = "Please enter a valid number of hours slept (0-24 hours)."
+                showAlert = true
               }
             }
             .padding()
@@ -149,7 +157,7 @@ struct SleepView: View {
           
           // Quality of Sleep Metric
           HStack {
-              Gauge(value: Double(main.currentSleepQuality), in: 0...1) {
+            Gauge(value: Double(main.currentSleepQuality), in: 0...1) {
               Text("Quality")
                 .foregroundColor(AppColorScheme.accentColor)
             }
@@ -163,13 +171,13 @@ struct SleepView: View {
         VStack {
           Text("Sleep Quality")
             .foregroundColor(AppColorScheme.textColor)
-            Button("Update Sleep Quality") {
-                main.currentSleepQuality = sleepQuality;
-            }.foregroundColor(AppColorScheme.textColor)
+          Button("Update Sleep Quality") {
+            main.currentSleepQuality = sleepQuality;
+          }.foregroundColor(AppColorScheme.textColor)
           HStack {
             Text("Poor")
               .foregroundColor(AppColorScheme.accentColor)
-              Slider(value: $sleepQuality)
+            Slider(value: $sleepQuality)
               .accentColor(AppColorScheme.accentColor)
             Text("Excellent")
               .foregroundColor(AppColorScheme.accentColor)
@@ -180,7 +188,8 @@ struct SleepView: View {
         Spacer()
       }
     }
+    .alert(isPresented: $showAlert) {
+      Alert(title: Text("Invalid Input"), message: Text(alertMsg), dismissButton: .default(Text("OK")))
+    }
   }
 }
-
-
