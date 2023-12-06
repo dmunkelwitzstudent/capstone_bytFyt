@@ -13,13 +13,12 @@ struct bytFyt_capstoneApp: App {
     
     @Environment(\.modelContext) private var modelContext
     @Query var users: [User]
-    @Query var exercises: [Exercise]
+    @Query var entries: [Entry]
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,
             Workout.self,
-            Exercise.self,
             Entry.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
@@ -37,6 +36,6 @@ struct bytFyt_capstoneApp: App {
                 ContentView()
 
         }
-        .modelContainer(for: [User.self, Workout.self, Entry.self, Exercise.self])
+        .modelContainer(for: [User.self, Workout.self, Entry.self])
     }
 }

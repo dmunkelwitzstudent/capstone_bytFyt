@@ -39,7 +39,6 @@ class User {
     var WeightGoal: Double;
     var WaterGoal: Double;
     
-    var DailyEntries: [Entry];
 
     
 
@@ -76,7 +75,6 @@ class User {
         self.WaterGoal = 64;
         
         
-        self.DailyEntries = [];
         
         self.UseMetric = useMetric;
         self.currentFoodCalories = 0;
@@ -183,59 +181,6 @@ class User {
         self.currentWater = addWater;
     }
     
-    
-
-
-    func getLatestEntry() -> Entry? {
-        
-        
-        if (DailyEntries.count == 0) {
-            return nil;
-            // should trigger upon first use.
-        }
-        
-        
-        
-        return DailyEntries[DailyEntries.count - 1];
-    
-    }
-    
-    
-    func getEntryList(goBack: Int) -> [Entry]? {
-        
-        // Loops backwards from the DailyEntries Array goBack amount of times, as long as it is valid
-        
-        // views will be 1w, 2w, 4w, 3m, 6m, 1y
-        
-        if (DailyEntries.count == 0) {
-            return nil;
-        }
-        
-        // grab array of entry objects from time to now, specified in function parameter.
-        
-        var returnArray: [Entry] = [];
-        // alternatively, simply loop back to time
-        let parameter = 2;
-        var counter = 0;
-        
-        while (counter <= parameter && DailyEntries.count - 1 - counter >= 0) {
-            returnArray[counter] = DailyEntries[DailyEntries.count - 1 - counter];
-            counter += 1;
-        }
-        
-        return returnArray;
-    }
-    
-    
-    func addEntry () {
-        
-        self.DailyEntries[DailyEntries.count] = Entry.init(today: Date(), weight: currentWeight, sleep: currentSleep,
-        foodCalories: currentFoodCalories, water: currentWater, sleepQuality: currentSleepQuality, activeCalories: currentActiveCalories);
-        
-        // if it is the end of the day. reset the current variables.
-        resetCurrentVariables();
-        
-    }
     
     
     func resetCurrentVariables() {

@@ -11,18 +11,17 @@
 import SwiftUI
 import SwiftData
 import UIKit
+import Foundation
 
 struct ContentView: View {
   
     // Keep track of which tab is selected with a state variable
     @State private var selectedTab = "Dashboard"
   
-    // Instance of SleepDataViewModel() to share data between views
-    @StateObject var sleepDataViewModel = SleepDataViewModel()
     
-    
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) var modelContext
     @Query private var users: [User];
+    @Query private var entries: [Entry];
     @State var activityLevel: Double = 1.15;
 
     
@@ -36,9 +35,14 @@ struct ContentView: View {
     @State var birthDate: Date = Date();
     @State var useMetric: Bool = false;
     
+
+    @State var currentDay: Date = Date();
+    
+    var loopCounter = 0;
+    
     var body: some View {
         
-
+        
         
         // If there are no USERS! MEANING THE USER HAS NOT ENTERED INFORMATION YET
         if (users.isEmpty) {
@@ -100,18 +104,13 @@ struct ContentView: View {
                 Text("Heavy exercise almost everyday")
             }
             
-            
-            
-            
+   
             Button ("Use Metric \(String(useMetric))") {
                 useMetric = !useMetric;
             }
             
             
 
-      
-            
-            
             Button("Submit") {
                 var main = User.init(firstName: fName, lastName: lName, birthday: birthDate, sex: true, height: Double(height)!, startWeight: Double(weight)!, activity: activityLevel, calorieGoal: 2000, sleepGoal: 460, weightGoal: Double(weight)!, useMetric: useMetric)
                 modelContext.insert(main)
@@ -119,14 +118,50 @@ struct ContentView: View {
 
             }
         } else {
-            
+
+            var main = users[0];
+
+                var timer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { (timer) in
+                    // do stuff 42 seconds later
+                    
+                    
+//                    let calendar = Calendar.current
+//
+//                    let now = Date()
+//                    let date = calendar.date(
+//                        bySettingHour: 23,
+//                        minute: 52,
+//                        second: 0,
+//                        of: now)!
+                
+//                    var calendar = Calendar.current
+//
+//                    var components = calendar.dateComponents([.second], from: latestDay, to: Date())
+//
+//                    if (components.second! == 10) {
+//                        latestDay = Date()
+//                        main.currentActiveCalories += 51;
+//                        
+//                    }
+                    
+                    if (System.getFormat(inputDate: Date()) != System.getFormat(inputDate: currentDay)) {
+                        
+                        var newEntry = Entry(today: Date(), weight: main.currentWeight, sleep: main.currentSleep, foodCalories: main.currentFoodCalories, water: main.currentWater, sleepQuality: main.currentSleepQuality, activeCalories: main.currentActiveCalories)
+                        
+                        currentDay = Date()
+                        modelContext.insert(newEntry)
+                    }
+                    
+                    
+                }
 
             
+
             // TabView creates a navigation bar
             TabView(selection: $selectedTab) {
                 
                 //View for dashboard
-                DashboardView(sleepDataViewModel: sleepDataViewModel)
+                DashboardView()
                     .tabItem {
                         Label("Dashboard", systemImage: "house")
                     }
@@ -134,7 +169,7 @@ struct ContentView: View {
                     .tag("Dashboard")
                 
                 //View for sleep
-                SleepView(sleepDataViewModel: sleepDataViewModel)
+                SleepView()
                     .tabItem {
                         Label("Sleep", systemImage: "moon.zzz")
                     }
@@ -158,6 +193,17 @@ struct ContentView: View {
                               Label("History", systemImage: "chart.bar")
                           }
                           .tag("History")
+                SettingsView()
+                          .tabItem {
+                              Label("Settings", systemImage: "gear")
+                          }
+                          .tag("Settings")
+                
+                GoalView()
+                          .tabItem {
+                              Label("Goal", systemImage: "trophy")
+                          }
+                          .tag("Goal")
 
                 
                 
@@ -187,14 +233,6 @@ struct ContentView: View {
         }
     }
 }
-
-/*
-struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    ContentView()
-  }
-}
-*/
 #Preview {
     ContentView()
         .modelContainer(for: [User.self, Workout.self], inMemory: false)

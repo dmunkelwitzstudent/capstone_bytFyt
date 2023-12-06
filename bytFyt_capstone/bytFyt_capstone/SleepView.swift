@@ -23,16 +23,11 @@ struct SleepView: View {
     @Query var users: [User]
   
   // Observable object to interact with the shared sleep data model.
-  @ObservedObject var sleepDataViewModel: SleepDataViewModel
+  //@ObservedObject var sleepDataViewModel: SleepDataViewModel
   
 
   
   // Function to update the hours slept in the SleepDataViewModel.
-  func updateSleepModel() {
-    
-    sleepDataViewModel.updateHoursSlept(newHours: 8)
-    
-  }
     
     @State  private var sleepGoalInput: String = ""
     // State variable to store the actual sleep goal
@@ -54,7 +49,7 @@ struct SleepView: View {
       
       // State variable to store user's sleep goal input
 
-      
+      var main = users[0];
       
     ZStack {
       
@@ -80,7 +75,7 @@ struct SleepView: View {
             
             Spacer()
             
-              Text("Goal: \(users[0].SleepGoal / 60) Hours")
+              Text("Goal: \(main.SleepGoal / 60) Hours")
               .font(.system(size: 50))
               .fontWeight(.bold)
               .foregroundColor(AppColorScheme.accentColor)
@@ -103,7 +98,7 @@ struct SleepView: View {
               if let newGoal = Double(sleepGoalInput) {
                 sleepGoal = newGoal
 
-                  users[0].SleepGoal = (newGoal * 60);
+                  main.SleepGoal = (newGoal * 60);
               }
               
             }
@@ -119,13 +114,13 @@ struct SleepView: View {
           // Hours Slept Metric
           HStack {
             
-              Gauge(value: Double(users[0].currentSleep), in: 0...Double(users[0].SleepGoal)) {
+              Gauge(value: Double(main.currentSleep), in: 0...Double(main.SleepGoal)) {
               Text("Slept")
                 .foregroundColor(AppColorScheme.accentColor)
             }
             
             .gaugeStyle(.accessoryCircularCapacity)
-              Text("\(Double(Double(users[0].currentSleep) / 60), specifier: "%.1f") Hours Slept Last Night")
+              Text("\(Double(Double(main.currentSleep) / 60), specifier: "%.1f") Hours Slept Last Night")
               .foregroundColor(AppColorScheme.accentColor)
           }
           
@@ -139,7 +134,7 @@ struct SleepView: View {
             Button("Set Hours") {
               if let newHours = Double(hoursSleptInput) {
                   hoursSlept = newHours;
-                  users[0].currentSleep = newHours * 60;
+                  main.currentSleep = newHours * 60;
                 
               }
             }
@@ -154,7 +149,7 @@ struct SleepView: View {
           
           // Quality of Sleep Metric
           HStack {
-              Gauge(value: Double(users[0].currentSleepQuality), in: 0...1) {
+              Gauge(value: Double(main.currentSleepQuality), in: 0...1) {
               Text("Quality")
                 .foregroundColor(AppColorScheme.accentColor)
             }
@@ -169,7 +164,7 @@ struct SleepView: View {
           Text("Sleep Quality")
             .foregroundColor(AppColorScheme.textColor)
             Button("Update Sleep Quality") {
-                users[0].currentSleepQuality = sleepQuality;
+                main.currentSleepQuality = sleepQuality;
             }.foregroundColor(AppColorScheme.textColor)
           HStack {
             Text("Poor")
@@ -188,14 +183,4 @@ struct SleepView: View {
   }
 }
 
-struct SleepView_Previews: PreviewProvider {
-  static var previews: some View {
-    
-    // Create a mock instance of SleepDataViewModel
-    let testSleepDataViewModel = SleepDataViewModel()
-    
-    // Use the mock instance for preview
-    SleepView(sleepDataViewModel: testSleepDataViewModel)
-    
-  }
-}
+

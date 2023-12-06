@@ -4,9 +4,10 @@
 //
 //  Created by Andrew Thayer on 11/27/23.
 //
-
+import Foundation
 import SwiftUI
 import Charts
+import SwiftData
 
 // Define color scheme
 struct AppColorScheme {
@@ -15,121 +16,169 @@ struct AppColorScheme {
   static let textColor = Color.white
 }
 
-// A generic chart view that can display various metrics
-struct MetricChartView: View {
-  let data: [MetricData]
-  let title: String
-  
-  
-  var body: some View {
-    VStack {
-      Text(title)
-        .font(.headline)
-        .foregroundColor(AppColorScheme.textColor)
-      
-      Chart {
-        ForEach(data, id: \.day) { metric in
-          BarMark(
-            x: .value("Day", metric.day),
-            y: .value("Value", metric.value)
-          )
-        }
-      }
-      .frame(width: 350, height: 500)
-    }
-    .background(AppColorScheme.backgroundColor)
-    .cornerRadius(10)
-  }
-}
-
-struct MetricData {
-  var day: String
-  var value: Double
-}
-
 struct HistoryView: View {
-  
-  // Sample data for each chart, covering 7 days
-  let sleepData: [MetricData] = [
-    MetricData(day: "Mon", value: 6),
-    MetricData(day: "Tue", value: 7),
-    MetricData(day: "Wed", value: 8),
-    MetricData(day: "Thu", value: 5),
-    MetricData(day: "Fri", value: 7),
-    MetricData(day: "Sat", value: 9),
-    MetricData(day: "Sun", value: 6)
-  ]
-  
-  let caloriesBurntData: [MetricData] = [
-    MetricData(day: "Mon", value: 300),
-    MetricData(day: "Tue", value: 350),
-    MetricData(day: "Wed", value: 400),
-    MetricData(day: "Thu", value: 300),
-    MetricData(day: "Fri", value: 450),
-    MetricData(day: "Sat", value: 500),
-    MetricData(day: "Sun", value: 350)
-  ]
-  
-  let caloriesConsumedData: [MetricData] = [
-    MetricData(day: "Mon", value: 2000),
-    MetricData(day: "Tue", value: 1800),
-    MetricData(day: "Wed", value: 1900),
-    MetricData(day: "Thu", value: 2100),
-    MetricData(day: "Fri", value: 2200),
-    MetricData(day: "Sat", value: 2300),
-    MetricData(day: "Sun", value: 1800)
-  ]
-  
-  let exerciseTimeData: [MetricData] = [
-    MetricData(day: "Mon", value: 60),
-    MetricData(day: "Tue", value: 45),
-    MetricData(day: "Wed", value: 30),
-    MetricData(day: "Thu", value: 40),
-    MetricData(day: "Fri", value: 50),
-    MetricData(day: "Sat", value: 70),
-    MetricData(day: "Sun", value: 55)
-  ]
-  
-  var body: some View {
-    ZStack {
-      AppColorScheme.backgroundColor
-        .ignoresSafeArea(edges: .all)
-      
-      VStack {
-        // Dashboard Header
-        Text("Health History")
-          .font(.largeTitle)
-          .foregroundColor(AppColorScheme.textColor)
-          .padding()
-          .background(AppColorScheme.backgroundColor)
+    
+    @Environment(\.modelContext) private var modelContext;
+    @Query private var users: [User];
+    
+    @Query private var entries: [Entry];
+    
+    
+    
+    
+    @State private var currentTag = "sleep";
+    var body: some View {
         
-        Spacer()
+        var entries = [
         
-        ScrollView(.horizontal, showsIndicators: false) {
-          HStack(spacing: 20) {
-            MetricChartView(data: sleepData, title: "Sleep")
-            MetricChartView(data: caloriesBurntData, title: "Calories Burned")
-            MetricChartView(data: caloriesConsumedData, title: "Calories Consumed")
-            MetricChartView(data: exerciseTimeData, title: "Exercise Time")
-          }
-          .padding()
-          Spacer()
+            
+            
+            Entry.init(today: Date() - (86400 * 12), weight: 200, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 11), weight: 199, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 10), weight: 198, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 9), weight: 197, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 8), weight: 190, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 7), weight: 200, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 6), weight: 199, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 5), weight: 198, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 4), weight: 197, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 3), weight: 190, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 2), weight: 185, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55),
+            Entry.init(today: Date() - (86400 * 1), weight: 182, sleep: 8, foodCalories: 12, water: 33, sleepQuality: 44, activeCalories: 55)
+            
+
+        ];
+        
+
+        
+        VStack {
+                Text("\(currentTag)")
+  
+                Chart {
+                    ForEach(entries, id: \.Date) { entry in
+                        
+                        if (currentTag == "sleep") {
+                            BarMark(
+                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                y: .value("Sleep", entry.Sleep)
+                            )
+                        } else if (currentTag == "weight") {
+                            BarMark(
+                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                y: .value("Weight", entry.Weight)
+                            )
+                        }
+                        
+                        else if (currentTag == "sleepquality") {
+                            BarMark(
+                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                y: .value("Sleep Quality", entry.SleepQuality)
+                            )
+                        }
+                        
+                        else if (currentTag == "water") {
+                            BarMark(
+                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                y: .value("Water", entry.WaterIntake)
+                            )
+                        }
+                        else if (currentTag == "food") {
+                            BarMark(
+                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                y: .value("Food", entry.FoodCalories)
+                            )
+                        }
+
+                        
+                        else {
+                            BarMark(
+                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                y: .value("Active", entry.ActiveCalories)
+                            )
+                        }
+                        
+
+                    }
+                }
+        
+            
+            HStack {
+                Button("Sleep") {
+                    currentTag = "sleep"
+                    
+                }
+                Button("Weight") {
+                    currentTag = "weight"
+                }
+                
+                Button("Food") {
+                    currentTag = "food"
+                    
+                }
+                Button("Sleepquality") {
+                    currentTag = "sleepquality"
+                }
+                
+                Button("Water") {
+                    currentTag = "water"
+                    
+                }
+                Button("Active ") {
+                    currentTag = "active"
+                }
+                
+                Button("1w") {
+                    
+                }
+                
+            }
+            
         }
         
-        // Horizontal Scroll Indication
-        Text("Swipe For More ➡️")
-          .font(.subheadline)
-          .foregroundColor(AppColorScheme.textColor)
-          .padding(.bottom)
         
-        Spacer()
-      }
-    }
-  }
-}
 
-struct HistoryView_Previews: PreviewProvider {
-  static var previews: some View {
-    HistoryView()
-  }
+    }
+    
+    func getFormat(inputDate: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/dd"
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        return dateFormatter.string(from: inputDate)
+        
+    }
+    
+    
+    func getEntryList(goBack: Int, entryList: [Entry]) -> [Entry]? {
+
+        // Loops backwards from the DailyEntries Array goBack amount of times, as long as it is valid
+
+        // views will be 1w, 2w, 4w, 3m, 6m, 1y
+        var returnArray: [Entry] = [];
+
+        if (entryList.count == 0) {
+            return nil;
+        }
+
+
+        var loopCounter: Int = 0;
+        while () {
+            //
+            //returnArray[loopCounter] = Entry.init(today: (Date() - 86), weight: 0, sleep: 0, foodCalories: 0, water: 0, sleepQuality: 0, activeCalories: 0)
+        }
+
+        // grab array of entry objects from time to now, specified in function parameter.
+
+
+//        // alternatively, simply loop back to time
+//        let parameter = 2;
+//        var counter = 0;
+//
+//        while (counter <= parameter && DailyEntries.count - 1 - counter >= 0) {
+//            returnArray[counter] = DailyEntries[DailyEntries.count - 1 - counter];
+//            counter += 1;
+//        }
+
+        return returnArray;
+    }
+    
 }

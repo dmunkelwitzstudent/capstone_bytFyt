@@ -9,8 +9,6 @@ import Foundation
 import SwiftData
 
 
-
-
 @Model
 class Entry {
     
@@ -49,7 +47,7 @@ class Entry {
     
     
     func changeSleep(newSleep: Double) {
-        self.WaterIntake += newSleep;
+        self.Sleep += newSleep;
     }
     
     func changeSleepQuality(newQuality: Double) {
@@ -70,11 +68,6 @@ class Entry {
     func changeActiveCalories(newCalories: Double) {
         self.ActiveCalories += newCalories;
     }
-    
-    
-    
-    
 
-    
 }
 

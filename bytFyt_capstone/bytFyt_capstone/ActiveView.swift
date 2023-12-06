@@ -33,7 +33,7 @@ struct ActiveView: View {
     
     var body: some View {
         
-        
+        var main = users[0];
         
         ZStack {
             AppColorScheme.backgroundColor
@@ -47,11 +47,11 @@ struct ActiveView: View {
                     .foregroundColor(AppColorScheme.textColor)
                     .padding()
                     .background(AppColorScheme.backgroundColor)
-                ProgressView(value: Double(Double(users[0].currentActiveCalories) / Double(users[0].ActivityGoal))) {
+                ProgressView(value: Double(Double(main.currentActiveCalories) / Double(main.ActivityGoal))) {
                     
                 }
                 .accentColor(Color.white)
-                Text("\(users[0].currentActiveCalories) Calories out of \(users[0].ActivityGoal) Goal")
+                Text("\(main.currentActiveCalories) Calories out of \(main.ActivityGoal) Goal")
                     .foregroundStyle(AppColorScheme.textColor)
                 
                 
@@ -76,7 +76,7 @@ struct ActiveView: View {
                                     
 
                                     Button("Completed Workout") {
-                                        users[0].currentActiveCalories += workout.TotalCalories;
+                                        main.currentActiveCalories += workout.TotalCalories;
                                     }
                                     
                                     Text("Workout: \(workout.Name)")

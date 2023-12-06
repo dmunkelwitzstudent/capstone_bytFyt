@@ -37,6 +37,9 @@ struct NutritionView: View {
     @Query var users: [User]
     
     var body: some View {
+        
+        var main = users[0];
+        
         ZStack {
             AppColorScheme.backgroundColor
                 .ignoresSafeArea(edges: .all)
@@ -58,9 +61,9 @@ struct NutritionView: View {
                         }
                         .padding()
                         .gaugeStyle(.accessoryCircularCapacity)
-                        Text("My Weight Goal: \(users[0].WeightGoal) lbs")
+                        Text("My Weight Goal: \(main.WeightGoal) lbs")
                             .foregroundStyle(AppColorScheme.accentColor)
-                        Text("Current Weight: \(users[0].currentWeight)")
+                        Text("Current Weight: \(main.currentWeight)")
                             .foregroundStyle(AppColorScheme.accentColor)
                         
                     }
@@ -83,7 +86,7 @@ struct NutritionView: View {
                                     weightGoal = newGoal
                                     //nutritionDataViewModel.updateWeightGoal(newWeightGoal: newGoal)
                                     
-                                    users[0].WeightGoal =  newGoal;
+                                    main.WeightGoal =  newGoal;
                                     
                                 }
                                 
@@ -99,14 +102,14 @@ struct NutritionView: View {
                     // Calories Metric
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                            Gauge(value: Double(users[0].currentFoodCalories), in: 0...Double(users[0].CalorieGoal)) {
+                            Gauge(value: Double(main.currentFoodCalories), in: 0...Double(main.CalorieGoal)) {
                                 Text("Calories")
                                     .foregroundColor(AppColorScheme.accentColor)
                             }
                             
                             .padding()
                             .gaugeStyle(.accessoryCircularCapacity)
-                            Text("\(users[0].currentFoodCalories) out of \(users[0].CalorieGoal) calories")
+                            Text("\(main.currentFoodCalories) out of \(main.CalorieGoal) calories")
                                 .foregroundColor(AppColorScheme.accentColor)
                             
                             
@@ -121,7 +124,7 @@ struct NutritionView: View {
                                 if let newCalorieIntake = Double(calorieIntakeInput) {
                                     calorieIntake = newCalorieIntake
                                     // nutritionDataViewModel.updateCalorieIntake(newCalorieIntake: newCalorieIntake)
-                                    users[0].currentFoodCalories += newCalorieIntake;
+                                    main.currentFoodCalories += newCalorieIntake;
                                 }
                                     
                             }
@@ -144,15 +147,15 @@ struct NutritionView: View {
                                         ).frame(width: 145, height: 145)
                                     
                                     VStack {
-                                        Text("\(users[0].currentWater, specifier: "%.0f")")
+                                        Text("\(main.currentWater, specifier: "%.0f")")
                                             .font(.title)
                                         Text("/")
                                             .font(.title)
-                                        Text("\(users[0].WaterGoal, specifier: "%.0f")oz")
+                                        Text("\(main.WaterGoal, specifier: "%.0f")oz")
                                             .font(.title)
                                     }
                                     Circle()
-                                        .trim(from: 0, to: Double(users[0].currentWater / users[0].WaterGoal))
+                                        .trim(from: 0, to: Double(main.currentWater / main.WaterGoal))
                                         .stroke(
                                             Color.white,
                                             lineWidth: 10
@@ -166,11 +169,11 @@ struct NutritionView: View {
                                 
                                 VStack {
                                     Button("+") {
-                                        users[0].currentWater  += 8;
+                                        main.currentWater  += 8;
                                     }
                                     .foregroundColor(.white)
                                     Button("-") {
-                                        users[0].currentWater  -= 8;
+                                        main.currentWater  -= 8;
                                     }
                                     .foregroundColor(.white)
                                 }

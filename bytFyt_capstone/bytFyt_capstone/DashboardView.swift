@@ -12,9 +12,8 @@ import SwiftData
 struct DashboardView: View {
   
   // Observable object that holds the sleep data.
-  @ObservedObject var sleepDataViewModel: SleepDataViewModel
   @Environment(\.modelContext) private var modelContext
-  @Query var users: [User];
+  @Query var main: [User];
     
     
 
@@ -27,19 +26,24 @@ struct DashboardView: View {
   }
 
   var body: some View {
+      
+      
+      var main = main[0];
+      
 
-      @State var sleepGoal: Double = Double(users[0].SleepGoal);
-      @State var currentSleep: Double = Double(users[0].currentSleep);
+      @State var sleepGoal: Double = Double(main.SleepGoal);
+      @State var currentSleep: Double = Double(main.currentSleep);
       
-      @State var currentActiveCalories: Double = Double(users[0].currentActiveCalories);
-      @State var activeGoal: Double = Double(users[0].ActivityGoal);
+      @State var currentActiveCalories: Double = Double(main.currentActiveCalories);
+      @State var activeGoal: Double = Double(main.ActivityGoal);
       
-      @State var currentFoodCalories: Double = Double(users[0].currentFoodCalories);
-      @State var foodGoal: Double = Double(users[0].CalorieGoal);
-    
+      @State var currentFoodCalories: Double = Double(main.currentFoodCalories);
+      @State var foodGoal: Double = Double(main.CalorieGoal);
       
-      @State var currentWater: Double = Double(users[0].currentWater);
-      @State var waterGoal: Double = Double(users[0].WaterGoal);
+      @State var currentWater: Double = Double(main.currentWater);
+      @State var waterGoal: Double = Double(main.WaterGoal);
+      
+      
       
     ZStack {
       AppColorScheme.accentColor
@@ -48,7 +52,7 @@ struct DashboardView: View {
       VStack {
         
         // Dashboard Header
-          Text("\(users[0].FirstName): \(users[0].currentWeight, specifier: "%.1f") lbs")
+          Text("\(main.FirstName): \(main.currentWeight, specifier: "%.1f") lbs")
         //Applies styles to the views. Try to keep consistent!
           .font(.largeTitle)
           .foregroundColor(AppColorScheme.backgroundColor)
@@ -62,20 +66,25 @@ struct DashboardView: View {
                   Text("BMI")
                       .font(.title2)
                       .foregroundColor(.gray)
-                  Text("\(users[0].getBMI(), specifier: "%.1f")")
+                  Text("\(main.getBMI(), specifier: "%.1f")")
                       .font(.title2)
                       
                   Text("BMR")
                       .font(.title2)
                       .foregroundColor(.gray)
-                  Text("\(users[0].getBMR(), specifier: "%.0f")")
+                  Text("\(main.getBMR(), specifier: "%.0f")")
                       .font(.title2)
                       
                   Text("AMR")
                       .font(.title2)
                       .foregroundColor(.gray)
-                  Text("\(users[0].getAMR(), specifier: "%.0f")")
+                  Text("\(main.getAMR(), specifier: "%.0f")")
                       .font(.title2)
+                  
+                  Text("\(main.getAge())")
+                      .font(.title2)
+                      .foregroundColor(.gray)
+
                       
                   
               }
@@ -103,15 +112,15 @@ struct DashboardView: View {
                         ).frame(width: 145, height: 145)
                     
                     VStack {
-                        Text("\(currentWater, specifier: "%.0f")")
+                        Text("\(main.currentWater, specifier: "%.0f")")
                             .font(.title)
                         Text("/")
                             .font(.title)
-                        Text("\(waterGoal, specifier: "%.0f")oz")
+                        Text("\(main.WaterGoal, specifier: "%.0f")oz")
                             .font(.title)
                     }
                     Circle()
-                        .trim(from: 0, to: Double(currentWater / waterGoal))
+                        .trim(from: 0, to: Double(main.currentWater / main.WaterGoal))
                         .stroke(
                             Color.blue,
                             lineWidth: 10
@@ -132,15 +141,15 @@ struct DashboardView: View {
                         ).frame(width: 145, height: 145)
                     
                     VStack {
-                        Text("\(currentFoodCalories, specifier: "%.0f")")
+                        Text("\(main.currentFoodCalories, specifier: "%.0f")")
                             .font(.title)
                         Text("/")
                             .font(.title)
-                        Text("\(foodGoal, specifier: "%.0f") cal")
+                        Text("\(main.CalorieGoal, specifier: "%.0f") cal")
                             .font(.title)
                     }
                     Circle()
-                        .trim(from: 0, to: Double(currentFoodCalories / foodGoal))
+                        .trim(from: 0, to: Double(main.currentFoodCalories / main.CalorieGoal))
                         .stroke(
                             Color.green,
                             lineWidth: 10
@@ -163,15 +172,15 @@ struct DashboardView: View {
                     
                     
                     VStack {
-                        Text("\((currentSleep / 60), specifier: "%.1f")")
+                        Text("\((main.currentSleep / 60), specifier: "%.1f")")
                             .font(.title)
                         Text("/")
                             .font(.title)
-                        Text("\((sleepGoal / 60), specifier: "%.0f") hours")
+                        Text("\((main.SleepGoal / 60), specifier: "%.0f") hours")
                             .font(.title)
                     }
                     Circle()
-                        .trim(from: 0, to: Double((currentSleep / 60) / (sleepGoal / 60)))
+                        .trim(from: 0, to: Double((main.currentSleep / 60) / (main.SleepGoal / 60)))
                         .stroke(
                             Color.purple,
                             lineWidth: 10
@@ -192,15 +201,15 @@ struct DashboardView: View {
                         ).frame(width: 145, height: 145)
                     
                     VStack {
-                        Text("\(currentActiveCalories, specifier: "%.0f")")
+                        Text("\(main.currentActiveCalories, specifier: "%.0f")")
                             .font(.title)
                         Text("/")
                             .font(.title)
-                        Text("\(activeGoal, specifier: "%.0f") cal")
+                        Text("\(main.ActivityGoal, specifier: "%.0f") cal")
                             .font(.title)
                     }
                     Circle()
-                        .trim(from: 0, to: Double(currentActiveCalories / activeGoal))
+                        .trim(from: 0, to: Double(main.currentActiveCalories / main.ActivityGoal))
                         .stroke(
                             Color.red,
                             lineWidth: 10
@@ -219,14 +228,4 @@ struct DashboardView: View {
   }
 }
 
-struct DashboardView_Previews: PreviewProvider {
-  static var previews: some View {
-    
-    // Create a mock instance of SleepDataViewModel
-    let testSleepDataViewModel = SleepDataViewModel()
-    
-    // Use the mock instance for preview
-    DashboardView(sleepDataViewModel: testSleepDataViewModel)
-    
-  }
-}
+

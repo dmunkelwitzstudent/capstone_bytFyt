@@ -14,13 +14,14 @@
 		400FE2A42B1D0EE10006ED7B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2A32B1D0EE10006ED7B /* ContentView.swift */; };
 		400FE2A62B1D0EE30006ED7B /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2A52B1D0EE30006ED7B /* DashboardView.swift */; };
 		400FE2A82B1D0EE40006ED7B /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2A72B1D0EE40006ED7B /* HistoryView.swift */; };
-		400FE2AA2B1D0EE60006ED7B /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2A92B1D0EE60006ED7B /* Exercise.swift */; };
 		400FE2AC2B1D0EE70006ED7B /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2AB2B1D0EE70006ED7B /* Entry.swift */; };
-		400FE2B22B1D0EEC0006ED7B /* SleepDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2B12B1D0EEC0006ED7B /* SleepDataViewModel.swift */; };
 		400FE2B42B1D0EEE0006ED7B /* SleepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2B32B1D0EEE0006ED7B /* SleepView.swift */; };
 		400FE2B62B1D0EF00006ED7B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2B52B1D0EF00006ED7B /* User.swift */; };
 		400FE2BA2B1D0EF70006ED7B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2B92B1D0EF70006ED7B /* Workout.swift */; };
 		400FE2BC2B1D0FBC0006ED7B /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FE2BB2B1D0FBC0006ED7B /* NutritionView.swift */; };
+		40C4D4612B1FA40A0070E0DA /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C4D4602B1FA40A0070E0DA /* System.swift */; };
+		40C4D4652B1FD9BA0070E0DA /* GoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C4D4642B1FD9BA0070E0DA /* GoalView.swift */; };
+		40D7C4F02B1D84D1004DFEF0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D7C4EF2B1D84D1004DFEF0 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,13 +33,14 @@
 		400FE2A32B1D0EE10006ED7B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		400FE2A52B1D0EE30006ED7B /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		400FE2A72B1D0EE40006ED7B /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		400FE2A92B1D0EE60006ED7B /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		400FE2AB2B1D0EE70006ED7B /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
-		400FE2B12B1D0EEC0006ED7B /* SleepDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDataViewModel.swift; sourceTree = "<group>"; };
 		400FE2B32B1D0EEE0006ED7B /* SleepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepView.swift; sourceTree = "<group>"; };
 		400FE2B52B1D0EF00006ED7B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		400FE2B92B1D0EF70006ED7B /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		400FE2BB2B1D0FBC0006ED7B /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
+		40C4D4602B1FA40A0070E0DA /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
+		40C4D4642B1FD9BA0070E0DA /* GoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoalView.swift; path = ../GoalView.swift; sourceTree = "<group>"; };
+		40D7C4EF2B1D84D1004DFEF0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,18 +73,19 @@
 		2EF355D92AF2F64E009E4AF7 /* bytFyt_capstone */ = {
 			isa = PBXGroup;
 			children = (
+				40D7C4EF2B1D84D1004DFEF0 /* SettingsView.swift */,
 				400FE2A12B1D0ED70006ED7B /* ActiveView.swift */,
 				400FE2A32B1D0EE10006ED7B /* ContentView.swift */,
 				400FE2A52B1D0EE30006ED7B /* DashboardView.swift */,
 				400FE2BB2B1D0FBC0006ED7B /* NutritionView.swift */,
 				400FE2A72B1D0EE40006ED7B /* HistoryView.swift */,
-				400FE2A92B1D0EE60006ED7B /* Exercise.swift */,
+				40C4D4642B1FD9BA0070E0DA /* GoalView.swift */,
 				400FE2AB2B1D0EE70006ED7B /* Entry.swift */,
-				400FE2B12B1D0EEC0006ED7B /* SleepDataViewModel.swift */,
 				400FE2B32B1D0EEE0006ED7B /* SleepView.swift */,
 				400FE2B52B1D0EF00006ED7B /* User.swift */,
 				400FE2B92B1D0EF70006ED7B /* Workout.swift */,
 				2EF355DA2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift */,
+				40C4D4602B1FA40A0070E0DA /* System.swift */,
 				2EF355E02AF2F64F009E4AF7 /* Assets.xcassets */,
 				2EF355E22AF2F64F009E4AF7 /* Preview Content */,
 			);
@@ -172,13 +175,14 @@
 				400FE2B42B1D0EEE0006ED7B /* SleepView.swift in Sources */,
 				400FE2A22B1D0ED70006ED7B /* ActiveView.swift in Sources */,
 				400FE2A82B1D0EE40006ED7B /* HistoryView.swift in Sources */,
-				400FE2B22B1D0EEC0006ED7B /* SleepDataViewModel.swift in Sources */,
+				40C4D4652B1FD9BA0070E0DA /* GoalView.swift in Sources */,
 				400FE2BA2B1D0EF70006ED7B /* Workout.swift in Sources */,
 				400FE2A62B1D0EE30006ED7B /* DashboardView.swift in Sources */,
+				40C4D4612B1FA40A0070E0DA /* System.swift in Sources */,
 				400FE2A42B1D0EE10006ED7B /* ContentView.swift in Sources */,
-				400FE2AA2B1D0EE60006ED7B /* Exercise.swift in Sources */,
 				2EF355DB2AF2F64E009E4AF7 /* bytFyt_capstoneApp.swift in Sources */,
 				400FE2BC2B1D0FBC0006ED7B /* NutritionView.swift in Sources */,
+				40D7C4F02B1D84D1004DFEF0 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
