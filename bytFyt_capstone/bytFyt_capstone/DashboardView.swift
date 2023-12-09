@@ -38,6 +38,8 @@ struct DashboardView: View {
     
     @State var currentWater: Double = Double(main.currentWater);
     @State var waterGoal: Double = Double(main.WaterGoal);
+      
+    @State var useMetric: Bool = main.UseMetric;
     
     ZStack {
       AppColorScheme.backgroundColor
@@ -65,16 +67,15 @@ struct DashboardView: View {
             
             Spacer()
               
+              Text("Weight:")
+                .font(.title2)
+                .foregroundColor(AppColorScheme.accentColor)
+
+              
               if (main.UseMetric) {
-                  Text("Weight:")
-                    .font(.title2)
-                    .foregroundColor(AppColorScheme.accentColor)
                   Text("\(System.convertImperialWeight(inputWeight: main.currentWeight), specifier: "%.1f") kg")
                       .font(.title)
               } else {
-                  Text("Weight:")
-                    .font(.title2)
-                    .foregroundColor(AppColorScheme.accentColor)
                   Text("\(main.currentWeight, specifier: "%.1f") lbs")
                     .font(.title)
               }
@@ -207,16 +208,16 @@ struct DashboardView: View {
                   ) .frame(width: 145, height: 145)
                 
                 VStack {
-                  Text("\((main.currentSleep / 60), specifier: "%.1f")")
+                  Text("\((main.currentSleep), specifier: "%.1f")")
                     .font(.title)
                   Text("/")
                     .font(.title)
-                  Text("\((main.SleepGoal / 60), specifier: "%.0f") hours")
+                  Text("\((main.SleepGoal), specifier: "%.0f") hours")
                     .font(.title)
                 }
                 
                 Circle()
-                  .trim(from: 0, to: Double((main.currentSleep / 60) / (main.SleepGoal / 60)))
+                  .trim(from: 0, to: Double((main.currentSleep) / (main.SleepGoal)))
                   .stroke(
                     Color.purple,
                     lineWidth: 10
@@ -256,128 +257,7 @@ struct DashboardView: View {
           Spacer()        // Dashboard Metrics
           VStack(alignment: .leading, spacing: 20) {
             
-            Spacer()
-            
-            HStack {
               
-              Spacer()
-              
-              // Water
-              ZStack {
-                Circle()
-                  .stroke(
-                    Color.blue.opacity(0.5),
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                
-                VStack {
-                  Text("\(main.currentWater, specifier: "%.0f")")
-                    .font(.title)
-                  Text("/")
-                    .font(.title)
-                  Text("\(main.WaterGoal, specifier: "%.0f")oz")
-                    .font(.title)
-                }
-                
-                Circle()
-                  .trim(from: 0, to: Double(main.currentWater / main.WaterGoal))
-                  .stroke(
-                    Color.blue,
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                  .rotationEffect(.degrees(-90))
-              }
-              
-              Spacer()
-              
-              // Food
-              ZStack {
-                Circle()
-                  .stroke(
-                    Color.green.opacity(0.5),
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                
-                VStack {
-                  Text("\(main.currentFoodCalories, specifier: "%.0f")")
-                    .font(.title)
-                  Text("/")
-                    .font(.title)
-                  Text("\(main.CalorieGoal, specifier: "%.0f") cal")
-                    .font(.title)
-                }
-                
-                Circle()
-                  .trim(from: 0, to: Double(main.currentFoodCalories / main.CalorieGoal))
-                  .stroke(
-                    Color.green,
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                // 1
-                  .rotationEffect(.degrees(-90))
-              }
-              Spacer()
-            }
-            Spacer()
-            
-            HStack {
-              
-              Spacer()
-              
-              // Sleep
-              ZStack {
-                Circle()
-                  .stroke(
-                    Color.purple.opacity(0.5),
-                    lineWidth: 10
-                  ) .frame(width: 145, height: 145)
-                
-                VStack {
-                  Text("\((main.currentSleep / 60), specifier: "%.1f")")
-                    .font(.title)
-                  Text("/")
-                    .font(.title)
-                  Text("\((main.SleepGoal / 60), specifier: "%.0f") hours")
-                    .font(.title)
-                }
-                
-                Circle()
-                  .trim(from: 0, to: Double((main.currentSleep / 60) / (main.SleepGoal / 60)))
-                  .stroke(
-                    Color.purple,
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                // 1
-                  .rotationEffect(.degrees(-90))
-              }
-              
-              Spacer()
-              // Active
-              ZStack {
-                Circle()
-                  .stroke(
-                    Color.red.opacity(0.5),
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                VStack {
-                  Text("\(main.currentActiveCalories, specifier: "%.0f")")
-                    .font(.title)
-                  Text("/")
-                    .font(.title)
-                  Text("\(main.ActivityGoal, specifier: "%.0f") cal")
-                    .font(.title)
-                }
-                Circle()
-                  .trim(from: 0, to: Double(main.currentActiveCalories / main.ActivityGoal))
-                  .stroke(
-                    Color.red,
-                    lineWidth: 10
-                  ).frame(width: 145, height: 145)
-                  .rotationEffect(.degrees(-90))
-              }
-              Spacer()
-            }
-            Spacer()
           }
           Spacer()
         }

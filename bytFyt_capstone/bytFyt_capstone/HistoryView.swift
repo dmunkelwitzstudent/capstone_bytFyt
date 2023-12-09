@@ -23,11 +23,13 @@ struct HistoryView: View {
     
     @Query private var entries: [Entry];
     
-    
-    
-    
+
     @State private var currentTag = "sleep";
+    
+    
     var body: some View {
+
+        
         
         var entries = [
         
@@ -59,32 +61,32 @@ struct HistoryView: View {
                         
                         if (currentTag == "sleep") {
                             BarMark(
-                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                x: .value("Day",  System.getFormat(inputDate: entry.Date)),
                                 y: .value("Sleep", entry.Sleep)
                             )
                         } else if (currentTag == "weight") {
                             BarMark(
-                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                x: .value("Day",  System.getFormat(inputDate: entry.Date)),
                                 y: .value("Weight", entry.Weight)
                             )
                         }
                         
                         else if (currentTag == "sleepquality") {
                             BarMark(
-                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                x: .value("Day",  System.getFormat(inputDate: entry.Date)),
                                 y: .value("Sleep Quality", entry.SleepQuality)
                             )
                         }
                         
                         else if (currentTag == "water") {
                             BarMark(
-                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                x: .value("Day",  System.getFormat(inputDate: entry.Date)),
                                 y: .value("Water", entry.WaterIntake)
                             )
                         }
                         else if (currentTag == "food") {
                             BarMark(
-                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                x: .value("Day",  System.getFormat(inputDate: entry.Date)),
                                 y: .value("Food", entry.FoodCalories)
                             )
                         }
@@ -92,7 +94,7 @@ struct HistoryView: View {
                         
                         else {
                             BarMark(
-                                x: .value("Day",  getFormat(inputDate: entry.Date)),
+                                x: .value("Day",  System.getFormat(inputDate: entry.Date)),
                                 y: .value("Active", entry.ActiveCalories)
                             )
                         }
@@ -138,15 +140,6 @@ struct HistoryView: View {
         
 
     }
-    
-    func getFormat(inputDate: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M/dd"
-        dateFormatter.calendar = Calendar(identifier: .gregorian)
-        return dateFormatter.string(from: inputDate)
-        
-    }
-    
     
     func getEntryList(goBack: Int, entryList: [Entry]) -> [Entry]? {
 
