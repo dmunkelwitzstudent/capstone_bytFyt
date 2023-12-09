@@ -16,8 +16,10 @@ class User {
     // but the underlying data will remain imperial
     
     // Height and Weight(s) are stored as inches and pounds respectively
+    // or cm and KG
     
-    // Sleep is stored in minutes
+    // Sleep is stored in hours
+    
     
     
     // the following properties will not be changed,
@@ -102,21 +104,6 @@ class User {
         return components.year!
     }
     
-    
-    func convertMetricHeight(inputHeight: Double) -> Double{
-        return Double(round(Double(inputHeight) * 2.54));
-    }
-    
-    func convertImperialHeight(inputHeight: Double) -> Double {
-        return Double(round(Double(inputHeight) * 0.3937));
-    }
-    
-    func convertMetricWeight(inputWeight: Double) -> Double{
-        return (inputWeight / 0.453592);
-    }
-    
-    
-    
     func getBMI() -> Double {
         return 703 * ((currentWeight / (Double(self.Height) * Double(self.Height))));
     }
@@ -186,7 +173,6 @@ class User {
     func resetCurrentVariables() {
         self.currentSleep = 0;
         self.currentWater = 0;
-        self.currentWeight = 0;
         self.currentFoodCalories = 0;
         self.currentSleepQuality = 0;
         self.currentFoodCalories = 0;

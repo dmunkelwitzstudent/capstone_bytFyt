@@ -19,7 +19,7 @@ struct ContentView: View {
     @State private var selectedTab = "Dashboard"
   
     
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.modelContext) var modelContext;
     @Query private var users: [User];
     @Query private var entries: [Entry];
     @State var activityLevel: Double = 1.15;
@@ -42,8 +42,7 @@ struct ContentView: View {
     
     var body: some View {
         
-        
-        
+
         // If there are no USERS! MEANING THE USER HAS NOT ENTERED INFORMATION YET
         if (users.isEmpty) {
 
@@ -122,41 +121,29 @@ struct ContentView: View {
             var main = users[0];
 
                 var timer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { (timer) in
-                    // do stuff 42 seconds later
+
                     
+                    // every 5 minutes, this code will be exectuted
                     
-//                    let calendar = Calendar.current
-//
-//                    let now = Date()
-//                    let date = calendar.date(
-//                        bySettingHour: 23,
-//                        minute: 52,
-//                        second: 0,
-//                        of: now)!
-                
-//                    var calendar = Calendar.current
-//
-//                    var components = calendar.dateComponents([.second], from: latestDay, to: Date())
-//
-//                    if (components.second! == 10) {
-//                        latestDay = Date()
-//                        main.currentActiveCalories += 51;
-//                        
-//                    }
+                    // Essentially, this if block determines if the currentDay variable is equal to the actual current timestamp
+                    // currentDay is initialized at the top of the struct
+                    
                     
                     if (System.getFormat(inputDate: Date()) != System.getFormat(inputDate: currentDay)) {
                         
-                        var newEntry = Entry(today: Date(), weight: main.currentWeight, sleep: main.currentSleep, foodCalories: main.currentFoodCalories, water: main.currentWater, sleepQuality: main.currentSleepQuality, activeCalories: main.currentActiveCalories)
+                        var newEntry = Entry(today: Date() - 600, weight: main.currentWeight, sleep: main.currentSleep, foodCalories: main.currentFoodCalories, water: main.currentWater, sleepQuality: main.currentSleepQuality, activeCalories: main.currentActiveCalories);
                         
-                        currentDay = Date()
-                        modelContext.insert(newEntry)
+                        
+                        
+                        
+                        currentDay = Date();
+                        modelContext.insert(newEntry);
+                        main.resetCurrentVariables();
                     }
-                    
                     
                 }
 
             
-
             // TabView creates a navigation bar
             TabView(selection: $selectedTab) {
                 
@@ -233,7 +220,4 @@ struct ContentView: View {
         }
     }
 }
-#Preview {
-    ContentView()
-        .modelContainer(for: [User.self, Workout.self], inMemory: false)
-}
+

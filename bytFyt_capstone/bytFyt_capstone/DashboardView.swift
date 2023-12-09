@@ -64,12 +64,22 @@ struct DashboardView: View {
               .font(.title)
             
             Spacer()
+              
+              if (main.UseMetric) {
+                  Text("Weight:")
+                    .font(.title2)
+                    .foregroundColor(AppColorScheme.accentColor)
+                  Text("\(System.convertImperialWeight(inputWeight: main.currentWeight), specifier: "%.1f") kg")
+                      .font(.title)
+              } else {
+                  Text("Weight:")
+                    .font(.title2)
+                    .foregroundColor(AppColorScheme.accentColor)
+                  Text("\(main.currentWeight, specifier: "%.1f") lbs")
+                    .font(.title)
+              }
             
-            Text("Weight:")
-              .font(.title2)
-              .foregroundColor(AppColorScheme.accentColor)
-            Text("\(main.currentWeight, specifier: "%.1f") lbs")
-              .font(.title)
+
             
             Spacer()
             
@@ -125,12 +135,22 @@ struct DashboardView: View {
                   ).frame(width: 145, height: 145)
                 
                 VStack {
-                  Text("\(main.currentWater, specifier: "%.0f")")
-                    .font(.title)
-                  Text("/")
-                    .font(.title)
-                  Text("\(main.WaterGoal, specifier: "%.0f")oz")
-                    .font(.title)
+                    
+                    if (main.UseMetric) {
+                        Text("\(System.convertImperialWater(waterAmount: main.currentWater), specifier: "%.0f")")
+                            .font(.title)
+                        Text("/")
+                            .font(.title)
+                        Text("\(System.convertImperialWater(waterAmount: main.WaterGoal), specifier: "%.0f")ml")
+                            .font(.title)
+                    } else {
+                        Text("\(main.currentWater, specifier: "%.0f")")
+                            .font(.title)
+                        Text("/")
+                            .font(.title)
+                        Text("\(main.WaterGoal, specifier: "%.0f")oz")
+                            .font(.title)
+                    }
                 }
                 
                 Circle()

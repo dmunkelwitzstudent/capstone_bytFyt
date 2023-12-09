@@ -51,7 +51,7 @@ struct ActiveView: View {
                     
                 }
                 .accentColor(Color.white)
-                Text("\(main.currentActiveCalories) Calories out of \(main.ActivityGoal) Goal")
+                Text("\(main.currentActiveCalories, specifier: "%.0f") Calories out of \(main.ActivityGoal, specifier: "%.0f") Goal")
                     .foregroundStyle(AppColorScheme.textColor)
                 
                 
@@ -74,24 +74,29 @@ struct ActiveView: View {
                                 
                                 NavigationLink {
                                     
-
+                                    
                                     Button("Completed Workout") {
                                         main.currentActiveCalories += workout.TotalCalories;
                                     }
+
+
                                     
                                     Text("Workout: \(workout.Name)")
                                         .font(.title)
-                                    Text("Total Calories: \(workout.TotalCalories)")
+                                    Text("Total Calories: \(workout.TotalCalories, specifier: "%.0f")")
                                         .font(.title2)
                                     
                                     //Text("Workout Description: \(workout.Desc)")
-                                    Text("Workout MuscleGroup: \(workout.MuscleGroup)")
+                                    Text("Muscle Group: \(workout.MuscleGroup)")
                                         .font(.title3)
                                     
                                     Text("\(workout.Desc)")
                                     
                                     
-                                    Button("Update Workout") {
+                                    Spacer()
+                                    
+                                    
+                                    Button("Edit Workout") {
                                         
                                         
                                         
@@ -108,7 +113,13 @@ struct ActiveView: View {
 
                                         
                                         if let newCalories = Double(workoutCalories) {
+                                            
+                                            
+                                            if (newCalories <= 0) {
+                                                
+                                            }
                                             workout.TotalCalories = newCalories
+                                            
                                             
                                         }
                                         
@@ -130,6 +141,7 @@ struct ActiveView: View {
                                         
                                      } label: {
                                     Text("\(workout.Name)");
+                                         
 
                                 }
                             }

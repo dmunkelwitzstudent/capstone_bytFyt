@@ -18,7 +18,12 @@ struct SettingsView: View {
     @Query private var users: [User];
     @State var activityLevel: Double = 1.15;
 
-
+    @State var showAlert = false
+    
+    @State var alertMsg = "";
+    
+    @State var unitMessage = "";
+    @State var unitSystem = "Imperial";
 
     
     @State var fName: String = "";
@@ -38,7 +43,6 @@ struct SettingsView: View {
         
         var main = users[0];
         
-
         
         VStack {
             
@@ -53,7 +57,7 @@ struct SettingsView: View {
                     .padding()
             }
             
-            TextField("Height", text: $height).padding()
+            TextField("Height: \(unitMessage)", text: $height).padding()
                 .keyboardType(.decimalPad)
             
             DatePicker(selection: $birthDate, in: ...Date.now, displayedComponents: .date) {
@@ -94,15 +98,51 @@ struct SettingsView: View {
             }
             
             
-            Button ("Use Metric \(String(useMetric))") {
+            Button ("Currently using \(unitSystem)") {
+                
                 useMetric = !useMetric;
+                
+                if (useMetric) {
+                    unitSystem = "Metric";
+                    unitMessage = "cm";
+                } else {
+                    unitSystem = "Imperial";
+                    unitMessage = "in";
+                }
             }
             
 
             
             Button("Update") {
                 
+                if let newHeight = Double(height) {
+                    
+                    
+                    if (useMetric) {
+                        
+                        if (newHeight > 90) {
+                            
+                            main.Height = Double(System.convertMetricHeight(inputHeight: newHeight));
+                        } else {
+                            alertMsg = "Please enter a height above 90cm";
+                            showAlert = true;
+                        }
+                    } else {
+                        if (newHeight > 36) {
+                            
+                            main.Height = Double(height)!;
+                        } else {
+                            alertMsg = "Please enter a height above 36in";
+                            showAlert = true;
+                        }
+                    }
+                    
                 
+                    
+                } else {
+                    alertMsg = "Please enter a valid number";
+                    showAlert = true;
+                }
                 
 
                 
@@ -112,16 +152,13 @@ struct SettingsView: View {
                     main.FirstName = fName;
                 }
                 
-                if (main.Birthday != birthDate) {
+                if (main.Birthday != birthDate && birthDate != Date()) {
                     main.Birthday = birthDate;
                 }
                 
             
                 main.UseMetric = useMetric;
                 
-                if (height != "") {
-                    main.Height = Double(height)!;
-                }
                 
                 
                 
@@ -129,7 +166,9 @@ struct SettingsView: View {
             }
             
             
-        }
+        }.alert(isPresented: $showAlert) {
+            Alert(title: Text("Invalid Input"), message: Text(alertMsg), dismissButton: .default(Text("OK")))
+          }
         
 
 
@@ -140,10 +179,9 @@ struct SettingsView: View {
 
     }
     
+    
 
 
 }
 
-#Preview {
-    SettingsView()
-}
+

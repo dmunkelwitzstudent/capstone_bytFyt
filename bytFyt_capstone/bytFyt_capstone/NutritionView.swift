@@ -147,12 +147,21 @@ struct NutritionView: View {
                                         ).frame(width: 145, height: 145)
                                     
                                     VStack {
-                                        Text("\(main.currentWater, specifier: "%.0f")")
-                                            .font(.title)
-                                        Text("/")
-                                            .font(.title)
-                                        Text("\(main.WaterGoal, specifier: "%.0f")oz")
-                                            .font(.title)
+                                        if (main.UseMetric) {
+                                            Text("\(System.convertImperialWater(waterAmount: main.currentWater), specifier: "%.0f")")
+                                                .font(.title)
+                                            Text("/")
+                                                .font(.title)
+                                            Text("\(System.convertImperialWater(waterAmount: main.WaterGoal), specifier: "%.0f")ml")
+                                                .font(.title)
+                                        } else {
+                                            Text("\(main.currentWater, specifier: "%.0f")")
+                                                .font(.title)
+                                            Text("/")
+                                                .font(.title)
+                                            Text("\(main.WaterGoal, specifier: "%.0f")oz")
+                                                .font(.title)
+                                        }
                                     }
                                     Circle()
                                         .trim(from: 0, to: Double(main.currentWater / main.WaterGoal))
@@ -169,11 +178,20 @@ struct NutritionView: View {
                                 
                                 VStack {
                                     Button("+") {
-                                        main.currentWater  += 8;
+                                        if (main.UseMetric) {
+                                            main.currentWater += 1.6907;
+                                        } else {
+                                            main.currentWater  += 8;
+                                        }
+                                        
                                     }
                                     .foregroundColor(.white)
                                     Button("-") {
-                                        main.currentWater  -= 8;
+                                        if (main.UseMetric) {
+                                            main.currentWater -= 2;
+                                        } else {
+                                            main.currentWater  -= 8;
+                                        }
                                     }
                                     .foregroundColor(.white)
                                 }
