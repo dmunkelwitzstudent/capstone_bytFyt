@@ -11,6 +11,8 @@ import SwiftData
 struct GoalView: View {
     
     
+    
+    
     //Color scheme for GoalView
     struct AppColorScheme {
         static let backgroundColor = Color.blue
@@ -25,10 +27,13 @@ struct GoalView: View {
     @State private var waterGoalInput: String = ""
     @State private var calorieGoalInput: String = ""
     @State private var caloriesBurntInput: String = ""
-
+    @State private var weightGoalInput: String = ""
+    @State private var showingAlert = false
+    @State private var errorMsg = ""
     
     var body: some View {
         var main = users[0]
+        
         ZStack {
             AppColorScheme.accentColor
                 .ignoresSafeArea(edges: .all)
@@ -47,20 +52,24 @@ struct GoalView: View {
                     VStack {
                         HStack {
                             Text("Current sleep goal: \(main.SleepGoal.formatted()) hours per night")
-                                
                         }
                         HStack {
-                            TextField("Enter Sleep Goal", text: $sleepGoalInput)
+                            TextField("Enter sleep goal", text: $sleepGoalInput)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .keyboardType(.decimalPad) // Ensures only numbers can be entered
                                 .padding()
+                                .frame(width: 250)
                             
                             Button("Set Goal") {
                                 // Convert input to Double and update sleep goal
-                                if let newGoal = Double(sleepGoalInput) {
-                                    main.SleepGoal = newGoal
+                                if (Double(sleepGoalInput) ?? 0 > 24 || Double(sleepGoalInput) ?? 0 < 1) {
+                                    showingAlert = true;
+                                    errorMsg = "Please enter a sleep goal greater than one hour and less than 24 hours";
                                 }
-                                sleepGoalInput = ""
+                                else if let newGoal = Double(sleepGoalInput) {
+                                                                   main.SleepGoal = newGoal;
+                                                               }
+                                sleepGoalInput = "";
                                 
                                 
                             }
@@ -68,7 +77,6 @@ struct GoalView: View {
                     }
                     
                 }
-                .padding()
                 
                 
                 // Water goal
@@ -76,73 +84,112 @@ struct GoalView: View {
                     VStack {
                         Text("Current water goal: \(main.WaterGoal.formatted()) ounces a day")
                         HStack {
-                            TextField("Enter Water Goal", text: $waterGoalInput)
-                                .textFieldStyle(PlainTextFieldStyle())
+                            TextField("Enter water goal", text: $waterGoalInput)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .keyboardType(.decimalPad) // Ensures only numbers can be entered
                                 .padding()
+                                .frame(width: 250)
                                 
                             
                             Button("Set Goal") {
-                                
-                                // Convert input to Double and update water goal
-                                if let newGoal = Double(waterGoalInput) {
-                                    main.WaterGoal = newGoal
+                                if (Double(waterGoalInput) ?? 0 > 1000 || Double(waterGoalInput) ?? 0 < 100) {
+                                    showingAlert = true;
+                                    errorMsg = "Please enter a water intake goal greater than 0 ounces and less than 1000 ounces";
                                 }
-                                waterGoalInput = ""
+                                // Convert input to Double and update water goal
+                                else if let newGoal = Double(waterGoalInput) {
+                                    main.WaterGoal = newGoal;
+                                }
+                                waterGoalInput = "";
                             }
                         }
                     }
                 }
-                .padding()
                 
                 // Calorie goal
                 HStack {
                     VStack {
                         Text("Current calorie goal: \(main.CalorieGoal.formatted()) calories a day")
                         HStack {
-                            TextField("Enter Calorie Goal", text: $calorieGoalInput)
+                            TextField("Enter calorie goal", text: $calorieGoalInput)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .keyboardType(.decimalPad) // Ensures only numbers can be entered
                                 .padding()
+                                .frame(width: 250)
                                 
                             Button("Set Goal") {
-                                
-                                // Convert input to Double and update calorie goal
-                                if let newGoal = Double(calorieGoalInput) {
-                                    
-                                    main.CalorieGoal = newGoal
+                                if (Double(calorieGoalInput) ?? 0 < 0) {
+                                    showingAlert = true;
+                                    errorMsg = "Please enter a calorie intake goal greater than zero";
                                 }
-                                calorieGoalInput = ""
+                                // Convert input to Double and update calorie goal
+                                else if let newGoal = Double(calorieGoalInput) {
+                                    
+                                    main.CalorieGoal = newGoal;
+                                }
+                                calorieGoalInput = "";
                             }
                         }
                     }
                 }
-                .padding()
                 
                 // Calories burnt
                 HStack {
                     VStack {
                         Text("Current activity goal: \(main.ActivityGoal.formatted()) calories burned a day")
                         HStack {
-                            TextField("Enter Calorie Goal", text: $caloriesBurntInput)
+                            TextField("Enter activity Goal", text: $caloriesBurntInput)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .keyboardType(.decimalPad) // Ensures only numbers can be entered
                                 .padding()
+                                .frame(width: 250)
                             
                             
                             Button("Set Goal") {
-                                
-                                // Convert input to Double and update activity goal
-                                if let newGoal = Double(caloriesBurntInput) {
-                                    
-                                    main.ActivityGoal = newGoal
+                                if (Double(caloriesBurntInput) ?? 0 < 0) {
+                                    showingAlert = true;
+                                    errorMsg = "Please enter a calories burnt goal greater than zero";
                                 }
-                                caloriesBurntInput = ""
+                                // Convert input to Double and update activity goal
+                                else if let newGoal = Double(caloriesBurntInput) {
+                                    
+                                    main.ActivityGoal = newGoal;
+                                }
+                                caloriesBurntInput = "";
                             }
                         }
                     }
                 }
-                .padding()
+                // Weight goal
+                HStack {
+                    VStack {
+                        Text("Current weight goal: \(main.WeightGoal.formatted()) pounds")
+                        HStack {
+                            TextField("Enter activity Goal", text: $weightGoalInput)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .keyboardType(.decimalPad) // Ensures only numbers can be entered
+                                .padding()
+                                .frame(width: 250)
+                            Button("Set Goal") {
+                                if (Double(weightGoalInput) ?? 0 < 0) {
+                                    errorMsg = "Please enter a weight goal greater than zero";
+                                    showingAlert = true;
+                                    
+                                }
+                                // Convert input to Double and update activity goal
+                                else if let newGoal = Double(weightGoalInput) {
+                                    
+                                    main.WeightGoal = newGoal;
+                                }
+                                weightGoalInput = "";
+                            }
+                        }
+                    }
+                }
+
+                
+            }.alert(errorMsg, isPresented: $showingAlert) {
+                Button("OK", role: .cancel) { }
             }
         }
 
